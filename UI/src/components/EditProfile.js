@@ -25,8 +25,8 @@ function EditProfile(props) {
   console.log("data==>", data);
   return data?.map((ele) => {
     return (
-      <div className="main-content" key={ele._id}>
-        <div className="page-content">
+      // <div className="main-content">
+        <div className="page-content"  key={ele._id}>
           <div className="container-fluid">
             <div className="position-relative mx-n4 mt-n4">
               <div className="profile-wid-bg profile-setting-img">
@@ -523,8 +523,7 @@ function EditProfile(props) {
           </div>
           {/* container-fluid */}
         </div>
-        {/* End Page-content */}
-      </div>
+      // </div>
     );
   });
 }
