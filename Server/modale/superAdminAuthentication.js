@@ -1,8 +1,22 @@
 import mongoose from "mongoose";
-const userSchema = mongoose.Schema;
-const newSchema= new userSchema({
+// import jwt from "jsonwebtoken"
 
+const userSchema = mongoose.Schema;
+const newSchema = new userSchema({
   email: { type: String, required: true },
-  password:{type:String,required:true}
+  password: { type: String, required: true },
+  // tokens: { type: String, required: true },
+  // tokens: [{ token: { type: String, required: true } }],
 });
 export default mongoose.model("adminAuthentication", newSchema);
+
+// newSchema.methods.generateAuthToken = async function () {
+//   try {
+//     let token = jwt.sign({ _id: this._id }, process.env.SECRET_KEY);
+//     this.tokens=this.tokens.concate({token:token})
+//     await this.save();
+//     return token;
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// };

@@ -5,5 +5,7 @@ const newSchema= new userSchema({
   email: { type: String, required: true },
   phone_no: { type: String ,required:true},
   location: { type: String,required:true },
+  manager_name: { type: String },
+  manager_number: { type: String,required:true },
 });
 export default mongoose.model("enquires", newSchema);

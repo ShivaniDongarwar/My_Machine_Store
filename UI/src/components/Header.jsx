@@ -1,10 +1,52 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+// import { useState } from "react";
+import { LOG_OUT, VENDOR_LOG_OUT } from "../api/apiEndpoints";
+import axios from "../api/axios";
 const Header = ({ toggle }) => {
+  const superAdminID = localStorage.getItem("superAdminID");
+  const { logo, userName } = JSON.parse(localStorage.getItem("vendor"));
+  const data = JSON.parse(localStorage.getItem("vendor"));
+  console.log("data===>", data);
+  // const [response, setResponse] = useState({});
   const navigate = useNavigate();
-  const clickHandler = (e) => {
+  const logOutHndler = async (e) => {
     e.stopPropagation();
-    localStorage.removeItem("superAdminID");
-    navigate("/");
+    try {
+      const auth = await axios.post(LOG_OUT);
+      if (auth.status === 200) {
+        localStorage.clear("superAdminID");
+        toast.success("Success Notification !", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        navigate("/");
+      }
+    } catch (err) {
+      console.log("message====>", err.message);
+      toast.error(`${err.message}`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  };
+
+  const clickHandler = async (e) => {
+    e.stopPropagation();
+    try {
+      const auth = await axios.post(VENDOR_LOG_OUT);
+      if (auth.status === 200) {
+        toast.success("Success Notification !", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        localStorage.clear("vendor");
+        navigate("/");
+      }
+    } catch (err) {
+      console.log("message====>", err.message);
+      toast.error(`${err.message}`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+    navigate("/vendorAuth");
   };
   return (
     <header id="page-topbar" style={{ left: toggle ? "70px" : "250px" }}>
@@ -15,7 +57,7 @@ const Header = ({ toggle }) => {
             <div className="navbar-brand-box horizontal-logo">
               <a href="index.html" className="logo logo-dark">
                 <span className="logo-sm">
-                  <img src="assets/images/logo-sm.png" alt height={22} />
+                  <img src="assets/images/logo-sm.png" alt="logo" height={22} />
                 </span>
                 {/* <span className="logo-lg">
                 <img src="assets/images/logo-dark.png" alt height={17} />
@@ -23,10 +65,18 @@ const Header = ({ toggle }) => {
               </a>
               <a href="index.html" className="logo logo-light">
                 <span className="logo-sm">
-                  <img src="assets/images/logo-sm.png" alt height={22} />
+                  <img
+                    src="assets/images/logo-sm.png"
+                    alt="logo2"
+                    height={22}
+                  />
                 </span>
                 <span className="logo-lg">
-                  <img src="assets/images/logo-light.png" alt height={17} />
+                  <img
+                    src="assets/images/logo-light.png"
+                    alt="logo3"
+                    height={17}
+                  />
                 </span>
               </a>
             </div>
@@ -1181,7 +1231,7 @@ const Header = ({ toggle }) => {
                   />
                   <span className="text-start ms-xl-2">
                     <span className="d-none d-xl-inline-block ms-1 fw-medium user-name-text">
-                      Anna Adame
+                      My Machine Store
                     </span>
                     <span className="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">
                       Founder
@@ -1189,58 +1239,60 @@ const Header = ({ toggle }) => {
                   </span>
                 </span>
               </button>
-              <div className="dropdown-menu dropdown-menu-end">
-                {/* item*/}
-                <h6 className="dropdown-header">Welcome Anna!</h6>
-                <a className="dropdown-item" href="pages-profile.html">
-                  <i className="mdi mdi-account-circle text-muted fs-16 align-middle me-1" />{" "}
-                  <span className="align-middle">Profile</span>
-                </a>
-                <a className="dropdown-item" href="apps-chat.html">
-                  <i className="mdi mdi-message-text-outline text-muted fs-16 align-middle me-1" />
-                  <span className="align-middle">Messages</span>
-                </a>
-                <a className="dropdown-item" href="apps-tasks-kanban.html">
-                  <i className="mdi mdi-calendar-check-outline text-muted fs-16 align-middle me-1" />
-                  <span className="align-middle">Taskboard</span>
-                </a>
-                <a className="dropdown-item" href="pages-faqs.html">
-                  <i className="mdi mdi-lifebuoy text-muted fs-16 align-middle me-1" />{" "}
-                  <span className="align-middle">Help</span>
-                </a>
-                <div className="dropdown-divider" />
-                <a className="dropdown-item" href="pages-profile.html">
-                  <i className="mdi mdi-wallet text-muted fs-16 align-middle me-1" />{" "}
-                  <span className="align-middle">
-                    Balance : <b>$5971.67</b>
-                  </span>
-                </a>
-                <a className="dropdown-item" href="pages-profile-settings.html">
-                  <span className="badge bg-soft-success text-success mt-1 float-end">
-                    New
-                  </span>
-                  <i className="mdi mdi-cog-outline text-muted fs-16 align-middle me-1" />{" "}
-                  <span className="align-middle">Settings</span>
-                </a>
-                <a className="dropdown-item" href="auth-lockscreen-basic.html">
-                  <i className="mdi mdi-lock text-muted fs-16 align-middle me-1" />{" "}
-                  <span className="align-middle">Lock screen</span>
-                </a>
-                <button
-                  className="dropdown-item"
-                  href="#"
-                  onClick={clickHandler}
-                >
-                  <i className="mdi mdi-logout text-muted fs-16 align-middle me-1" />{" "}
-                  <span className="align-middle" data-key="t-logout">
-                    Logout
-                  </span>
-                </button>
-              </div>
+              {superAdminID ? (
+                <div className="dropdown-menu dropdown-menu-end">
+                  {/* item*/}
+                  <h6 className="dropdown-header">Welcome Anna!</h6>
+                  <Link
+                    to={"/profile"}
+                    className="dropdown-item"
+                    href="pages-profile.html"
+                  >
+                    <i className="mdi mdi-account-circle text-muted fs-16 align-middle me-1" />
+                    <span className="align-middle">Profile</span>
+                  </Link>
+
+                  <button
+                    className="dropdown-item"
+                    href="#"
+                    onClick={logOutHndler}
+                  >
+                    <i className="mdi mdi-logout text-muted fs-16 align-middle me-1" />{" "}
+                    <span className="align-middle" data-key="t-logout">
+                      Logout
+                    </span>
+                  </button>
+                </div>
+              ) : (
+                <div className="dropdown-menu dropdown-menu-end">
+                  {/* item*/}
+                  <h6 className="dropdown-header">Welcome {userName}!</h6>
+                  <Link
+                    to={"/profile"}
+                    className="dropdown-item"
+                    href="pages-profile.html"
+                  >
+                    <i className="mdi mdi-account-circle text-muted fs-16 align-middle me-1" />{" "}
+                    <span className="align-middle">Profile</span>
+                  </Link>
+
+                  <button
+                    className="dropdown-item"
+                    href="#"
+                    onClick={clickHandler}
+                  >
+                    <i className="mdi mdi-logout text-muted fs-16 align-middle me-1" />{" "}
+                    <span className="align-middle" data-key="t-logout">
+                      Logout
+                    </span>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
+      <ToastContainer />
     </header>
   );
 };

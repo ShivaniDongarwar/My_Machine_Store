@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
-import { Link ,Outlet} from "react-router-dom";
+import { Link } from "react-router-dom";
 import SidebarData from "../data/SidebarData";
+import { SideBarDataVender} from "../vendor/sidebar/SideBarDataVender";
 
-const Sidebar = ({onToggle, toggle}) => {
+
+const Sidebar = ({ onToggle, toggle }) => {
   const [clicked, setClicked] = useState(false);
+  const id = localStorage.getItem("superAdminID");
   const handleDropdown = (index) => {
     console.log(index);
     if (clicked === index) {
@@ -15,6 +18,7 @@ const Sidebar = ({onToggle, toggle}) => {
     console.log("clicked=>", clicked);
     setClicked(index);
   };
+
   return (
     <>
       <div
@@ -43,7 +47,7 @@ const Sidebar = ({onToggle, toggle}) => {
           {/* Light Logo*/}
           <a href="index.html" className="logo logo-light">
             <span className="logo-sm">
-              <img src="assets/images/logo-sm.png" alt height={22} />
+              <img src="assets/images/logo-sm.png" alt="mymachinestore" />
             </span>
             <span className="logo-lg">
               <img
@@ -81,7 +85,117 @@ const Sidebar = ({onToggle, toggle}) => {
                   Menu
                 </span>
               </li>
-              {SidebarData.map((data) => {
+              {id
+                ? SidebarData.map((data) => {
+                    return (
+                      <li
+                        key={data.idx}
+                        onClick={() => handleDropdown(data.idx)}
+                        className="nav-item"
+                      >
+                        <Link
+                          // to={`${data.submenu ? `${data.href}` : "/"}`}
+                          to={`${data.href}`}
+                          className="nav-link menu-link"
+                          data-bs-toggle={`${data.submenu ? "collapse" : ""}`}
+                          aria-expanded={`${data.submenu ? true : false}`}
+                          aria-controls={data.href}
+                        >
+                          {data.icon}
+                          <span
+                            style={{ display: toggle ? "none" : "block" }}
+                            data-key={data.datakey}
+                          >
+                            {data.title}
+                          </span>
+                        </Link>
+                        {data.submenu && (
+                          <div>
+                            {clicked === data.idx &&
+                              data.submenu.map((sub) => (
+                                <div
+                                  key={sub.idx}
+                                  onClick={() => handleDropdown(sub.idx)}
+                                  className={
+                                    clicked !== data.idx
+                                      ? "collapse menu-dropdown"
+                                      : "collapse menu-dropdown show"
+                                  }
+                                  id={sub.id}
+                                >
+                                  <ul className="nav nav-sm flex-column">
+                                    <li className="nav-item">
+                                      <Link
+                                        to={`/${sub.href}`}
+                                        className="nav-link"
+                                        data-key={sub.datakey}
+                                      >
+                                        {sub.title}
+                                      </Link>
+                                    </li>
+                                  </ul>
+                                </div>
+                              ))}
+                          </div>
+                        )}
+                      </li>
+                    );
+                  })
+                : SideBarDataVender.map((data) => {
+                    return (
+                      <li
+                        key={data.idx}
+                        onClick={() => handleDropdown(data.idx)}
+                        className="nav-item"
+                      >
+                        <Link
+                          to={`${data.submenu ? `${data.href}` : "/"}`}
+                          className="nav-link menu-link"
+                          data-bs-toggle={`${data.submenu ? "collapse" : ""}`}
+                          aria-expanded={`${data.submenu ? true : false}`}
+                          aria-controls={data.href}
+                        >
+                          {data.icon}
+                          <span
+                            style={{ display: toggle ? "none" : "block" }}
+                            data-key={data.datakey}
+                          >
+                            {data.title}
+                          </span>
+                        </Link>
+                        {data.submenu && (
+                          <div>
+                            {clicked === data.idx &&
+                              data.submenu.map((sub) => (
+                                <div
+                                  key={sub.idx}
+                                  onClick={() => handleDropdown(sub.idx)}
+                                  className={
+                                    clicked !== data.idx
+                                      ? "collapse menu-dropdown"
+                                      : "collapse menu-dropdown show"
+                                  }
+                                  id={sub.id}
+                                >
+                                  <ul className="nav nav-sm flex-column">
+                                    <li className="nav-item">
+                                      <Link
+                                        to={`/${sub.href}`}
+                                        className="nav-link"
+                                        data-key={sub.datakey}
+                                      >
+                                        {sub.title}
+                                      </Link>
+                                    </li>
+                                  </ul>
+                                </div>
+                              ))}
+                          </div>
+                        )}
+                      </li>
+                    );
+                  })}
+              {/* {SidebarData.map((data) => {
 
                 return (
                   <li
@@ -91,7 +205,8 @@ const Sidebar = ({onToggle, toggle}) => {
                   >
 
                     <Link
-                      to={`${data.submenu ? `${data.href}` : "/"}`}
+                      // to={`${data.submenu ? `${data.href}` : "/"}`}
+                      to={`${data.href}`}
                       className="nav-link menu-link"
                       data-bs-toggle={`${data.submenu ? "collapse" : ""}`}
                       aria-expanded={`${data.submenu ? true : false}`}
@@ -138,7 +253,7 @@ const Sidebar = ({onToggle, toggle}) => {
 
                   </li>
                 );
-              })}
+              })} */}
               {/* <Link to="Companylist">Company Name</Link>
               <Link>Enquiry</Link>
               <Link>aprroved</Link>
@@ -150,7 +265,6 @@ const Sidebar = ({onToggle, toggle}) => {
         {/* <div className="sidebar-background" /> */}
       </div>
     </>
-
   );
 };
 

@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+// import Charts from "./Charts";
+// import Counter from "./Counter";
 import Footer from "./Footer";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 
 const Main = () => {
   const [toggle, setToggle] = useState(false);
-/**
- * @func toggleButton
- * to hide/unhide side bar
- */
+  /**
+   * @func toggleButton
+   * to hide/unhide side bar
+   */
   const toggleButton = () => {
     setToggle((prev) => !prev);
   };
@@ -17,6 +19,8 @@ const Main = () => {
     <>
       <Sidebar onToggle={toggleButton} toggle={toggle} />
       <Header toggle={toggle} />
+      {/* <Counter />
+      <Charts /> */}
       <div className={toggle ? "ml70" : "main-content"}>
         <Outlet />
         <Footer />

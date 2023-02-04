@@ -1,4 +1,3 @@
-import React from "react";
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 import CategoryRoundedIcon from '@mui/icons-material/CategoryRounded';
 

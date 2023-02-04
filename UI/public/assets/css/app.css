@@ -2089,10 +2089,10 @@
 }
 }/*!
  * Waves v0.7.6
- * http://fian.my.id/Waves 
- * 
- * Copyright 2014-2018 Alfiana E. Sibuea and other contributors 
- * Released under the MIT license 
+ * http://fian.my.id/Waves
+ *
+ * Copyright 2014-2018 Alfiana E. Sibuea and other contributors
+ * Released under the MIT license
  * https://github.com/fians/Waves/blob/master/LICENSE */.waves-effect {
     position: relative;
     cursor: pointer;
@@ -14028,7 +14028,7 @@ padding-bottom: 50px;
     transition: all 0.5s ease-in-out;
 }
 .logoo{
-    
+
     width: 190px;
     /* margin-top: 20px; */
 }
@@ -14085,10 +14085,10 @@ padding-bottom: 50px;
     border: 1px solid rgba(0,0,0,.125);
     border-radius: 0.25rem;
     width: 100%;
-    padding-bottom: 30px;
-    height: 100%;
+    /* padding-bottom: 30px; */
+    /* height: 100%; */
     border: none;
-    background-color: transparent;
+    /* background-color: transparent; */
 }
 .cardb{
     -webkit-box-flex: 1;
