@@ -1,29 +1,69 @@
 import { useState, useEffect } from "react";
 import axios from "../../api/axios";
+// import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+
 import { ADD_PRODUCT } from "../../api/apiEndpoints";
 import { useSelector } from "react-redux";
+import ProductImage from "./ProductImage";
 const MainContent = () => {
   const [productName, setProductName] = useState("");
   const [discription, setDiscription] = useState("");
   const [price, setPrice] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState();
   const [response, setResponse] = useState([]);
+
+  const navigate = useNavigate();
+  // const [selectFile, setSelectFile] = useState(null);
   // const { userToken } = useSelector((state) => state.vendorAuth);
   // console.log("userToken===>", userToken);
-  const{ _id }= JSON.parse(localStorage.getItem("vendor"));
-  console.log("adminId====>",_id)
+  // const { _id } = JSON.parse(localStorage.getItem("vendor"));
+  // console.log("adminId====>", _id);
+  const formData = new FormData();
+
+  const imageHandler = (event) => {
+    // console.log("image====>", event.target.files);
+    // console.log("image====2>", event.target.files[0]);
+    if (event.target && event.target.files[0]) {
+      setImage(event.target.files[0]);
+      // formData.append("image", image);
+    } else {
+      console.log("Something went wrong");
+    }
+
+    // setImage(event.target.files[0]);
+  };
   const saveHandler = async (e) => {
+    // console.log("img===>", image);
     e.preventDefault();
     try {
-      const detail = await axios.post(ADD_PRODUCT, {
-        productName: productName,
-        discription: discription,
-        price: price,
-        image: image,
-        id: _id,
+      // let imageUrl = "";
+      // if (image) {
+      //   const formData = new FormData();
+      //   formData.append("file", image.name);
+      //   formData.append("upload_preset", "My_Machine_store");
+      //   const dataRes = await axios.post(
+      //     "cloudinary://622125536676225:VUv_Zv3IvbgNpkqZUT77xnYi_uM@dbql964re",
+      //     formData
+      //   );
+      //   console.log("dataRes===>",dataRes)
+      //   imageUrl = dataRes?.data.url;
+      // }
+      // const submitPost = {
+      //   image: imageUrl,
+      // };
+      // console.log("submitPost===>",submitPost)
+      formData.append("productName", productName);
+      formData.append("discription", discription);
+      formData.append("price", price);
+      formData.append("image", image);
+      // formData.append("_id", _id);
+
+      const detail = await axios.post(ADD_PRODUCT, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
       console.log("detail===>", detail.data.result);
-      // setResponse(detail.data.result)
+      setResponse(detail.data.result);
     } catch (error) {
       console.log("error===>", error.message);
     }
@@ -31,13 +71,14 @@ const MainContent = () => {
     setDiscription("");
     setPrice("");
     setImage("");
-    // navigate("/")
+    navigate("/vendorAdminPanel");
   };
+
   const enquiryDetail = async () =>
     await axios
       .get(`/enquiry/productList?id=${_id}`)
       .then((res) => {
-        // console.log(res?.data?.result);
+        console.log(res?.data?.result);
         setResponse(res?.data?.result);
       })
       .catch((error) => {
@@ -47,8 +88,8 @@ const MainContent = () => {
   useEffect(() => {
     enquiryDetail();
   }, []);
-  // let data=[];
-  //   data.push(response);
+  // let data = [];
+  // data.push(response);
   console.log("productListres===>", response);
   return (
     <div className="main-content">
@@ -90,14 +131,14 @@ const MainContent = () => {
                       <i className="ri-equalizer-fill me-1 align-bottom"></i>{" "}
                       Filters
                     </button>
-                    <button
+                    <Link
                       className="btn btn-primary"
-                      data-bs-toggle="modal"
-                      data-bs-target="#addSeller"
+
+                     to={"/AddProduct"}
                     >
                       <i className="ri-add-fill me-1 align-bottom"></i> Add
                       Product
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -135,26 +176,41 @@ const MainContent = () => {
                     </thead>
                     {/* {response.length===null?<p>{}</p>:{}} */}
                     {response?.map((ele) => {
-                      return (
-                        <tbody className="bg-slight-white" key={ele._id}>
-                          <tr className="border-slight-grey">
-                            <th scope="row">
-                              <div className="form-check">
-                                <input
-                                  className="form-check-input fs-15"
-                                  type="checkbox"
-                                  name="checkAll"
-                                  value="option1"
-                                />
-                              </div>
-                            </th>
-                            <td className="td-grey-col">{ele.product_name}</td>
-                            <td className="td-grey-col">{ele.discriptrion}</td>
-                            <td className="td-grey-col">{ele.price}</td>
-                            <td className="td-grey-col">{ele.image}</td>
-                          </tr>
-                        </tbody>
-                      );
+                      console.log("ele===>", ele.image);
+                      {
+                        return (
+                          <tbody className="bg-slight-white" key={ele._id}>
+                            <tr className="border-slight-grey">
+                              <th scope="row">
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input fs-15"
+                                    type="checkbox"
+                                    name="checkAll"
+                                    value="option1"
+                                  />
+                                </div>
+                              </th>
+                              <td className="td-grey-col">
+                                {ele.product_name}
+                              </td>
+                              <td className="td-grey-col">
+                                {ele.discriptrion}
+                              </td>
+                              <td className="td-grey-col">{ele.price}</td>
+                              {/* <td className="td-grey-col">{ele?.image}</td> */}
+                              {/* <td className="td-grey-col">
+                                <img
+                                  src={`http://localhost:5001/${ele?.image}`}
+                                  alt="img"
+                                  style={{ height: "60px", width: "60px" }}
+                                ></img>
+                              </td> */}
+                              <ProductImage image={ele?.image} />
+                            </tr>
+                          </tbody>
+                        );
+                      }
                     })}
                   </table>
                 </div>
@@ -283,7 +339,300 @@ const MainContent = () => {
                       id="personalDetails"
                       role="tabpanel"
                     >
-                      <form action="#">
+                      {/* <form
+                        className="form product-edit predit"
+                        onSubmit={handleSubmit(submitHandler)}
+                      >
+                        <div className="form__half fhalf">
+                          <div className="form__form-group fgroup">
+                            <span className="form__form-group-label fgroup_label">
+                              Product Name
+                            </span>
+                            <div className="form__form-group-field ffeild">
+                              <Field
+                                name="productname"
+                                component="input"
+                                type="text"
+                                id="productname"
+                                autoFocus
+                                {...register("productname", {
+                                  required: "Please enter productname",
+                                })}
+                              />
+                              {errors.productname && (
+                                <div className="text-danger">
+                                  {errors.productname.message}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          <div className="form__form-group-id-category fcat">
+                            <div className="form__form-group form__form-group-id fgroupid">
+                              <span className="form__form-group-label fidspan">
+                                Stock
+                              </span>
+                              <div className="form__form-group-field fidfeild">
+                                <Field
+                                  name="stock"
+                                  component="input"
+                                  type="text"
+                                  id="stock"
+                                  {...register("stock", {
+                                    required: "Please enter stock",
+                                  })}
+                                />
+                                {errors.stock && (
+                                  <div className="text-danger">
+                                    {errors.stock.message}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            <div className="form__form-group fcate">
+                              <span className="form__form-group-label fidspan">
+                                Category
+                              </span>
+                              <div className="form__form-group-field ffeild1">
+                                <Field
+                                  name="category"
+                                  component={renderSelectField}
+                                  type="text"
+                                  options={[
+                                    { value: "laser", label: "laser" },
+                                    { value: "paper", label: "Paper" },
+                                  ]}
+                                  id="category"
+                                  {...register("category", {
+                                    required: "Please enter category",
+                                  })}
+                                />
+                                {errors.category && (
+                                  <div className="text-danger">
+                                    {errors.category.message}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="form__form-group">
+                            <span className="form__form-group-label">
+                              Email-id
+                            </span>
+                            <div className="form__form-group-field">
+                              <Field
+                                name="email"
+                                component="input"
+                                type="text"
+                                id="email"
+                                {...register("email", {
+                                  required: "Please enter email",
+                                })}
+                              />
+                              {errors.email && (
+                                <div className="text-danger">
+                                  {errors.email.message}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          <div className="form__form-group fpho">
+                            <span className="form__form-group-label fidspan">
+                              Full description
+                            </span>
+                            <div className="form__form-group-field fidfeild">
+                              <Field
+                                name="description"
+                                component="textarea"
+                                type="text"
+                                id="description"
+                                {...register("description", {
+                                  required: "Please enter description",
+                                })}
+                              />
+                              {errors.description && (
+                                <div className="text-danger">
+                                  {errors.description.message}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="card__title upper">
+                            <h5 className="bold-text h5">Pricing</h5>
+                          </div>
+                          <div className="form__form-group-price-discount pricing">
+                            <div className="form__form-group form__form-group-price fpho price">
+                              <span className="form__form-group-label fidspan">
+                                Price
+                              </span>
+                              <div className="form__form-group-field fidfeild">
+                                <div className="form__form-group-icon fidicon">
+                                  <CurrencyUsdIcon />
+                                </div>
+                                <Field
+                                  name="price"
+                                  component="input"
+                                  type="text"
+                                  id="price"
+                                  {...register("price", {
+                                    required: "Please enter price",
+                                  })}
+                                />
+                                {errors.price && (
+                                  <div className="text-danger">
+                                    {errors.price.message}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            <div className="form__form-group fgroup">
+                              <span className="form__form-group-label fidspan">
+                                Rating
+                              </span>
+                              <div className="form__form-group-field fidfeild">
+                                <div className="form__form-group-icon fidicon">
+                                  <TagIcon />
+                                </div>
+                                <Field
+                                  name="rating"
+                                  component="input"
+                                  type="text"
+                                  id="rating"
+                                  {...register("rating", {
+                                    required: "Please enter rating",
+                                  })}
+                                />
+                                {errors.rating && (
+                                  <div className="text-danger">
+                                    {errors.rating.message}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="card__title upper">
+                            <h5 className="bold-text h5">
+                              General information
+                            </h5>
+                          </div>
+                          <div className="form form--horizontal predit">
+                            <div className="form__form-group fpho grp">
+                              <span className="form__form-group-label fidspan bn">
+                                Brand Name
+                              </span>
+                              <div className="form__form-group-field fed fidfeild">
+                                <Field
+                                  name="brand"
+                                  component="input"
+                                  type="text"
+                                  id="brand"
+                                  {...register("brand", {
+                                    required: "Please enter brand",
+                                  })}
+                                />
+                                {errors.brand && (
+                                  <div className="text-danger">
+                                    {errors.brand.message}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            <div className="form__form-group fpho grp">
+                              <span className="form__form-group-label fidspan bn">
+                                Category
+                              </span>
+                              <div className="form__form-group-field fed fidfeild">
+                                <Field
+                                  name="general_category"
+                                  component="input"
+                                  type="text"
+                                />
+                              </div>
+                            </div>
+                            <div className="form__form-group fpho grp">
+                              <span className="form__form-group-label fidspan bn">
+                                Delivery Condition
+                              </span>
+                              <div className="form__form-group-field fed fidfeild">
+                                <Field
+                                  name="delivery"
+                                  component="input"
+                                  type="text"
+                                />
+                              </div>
+                            </div>
+                            <div className="form__form-group fpho grp">
+                              <span className="form__form-group-label fidspan bn">
+                                Weight
+                              </span>
+                              <div className="form__form-group-field fed fidfeild">
+                                <Field
+                                  name="weight"
+                                  component="input"
+                                  type="text"
+                                />
+                              </div>
+                            </div>
+                            <div className="form__form-group fpho grp">
+                              <span className="form__form-group-label fidspan bn">
+                                Size
+                              </span>
+                              <div className="form__form-group-field fed fidfeild">
+                                <Field
+                                  name="size"
+                                  component="input"
+                                  type="text"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="form__half fhalf">
+                          <div className="form__form-group fpho">
+                            <span className="form__form-group-label fidspan">
+                              Upload photo
+                            </span>
+                            <div className="form__form-group-field ffeild1">
+                              <Field
+                                name="files"
+                                component={renderDropZoneMultipleField}
+                                className="fe100"
+                                id="files"
+                                {...register("files", {
+                                  required: "Please enter image",
+                                })}
+                              />
+                              {errors.files && (
+                                <div className="text-danger">
+                                  {errors.files.message}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                        <ButtonToolbar className="form__button-toolbar btn-toolbar gcrzof dugaUB">
+                          <Button
+                            color="primary"
+                            className="imbPV"
+                            type="submit"
+                          >
+                            Save
+                          </Button>
+                          <Button
+                            type="button"
+                            className="eKRLWe btn-secondary"
+                            onClick={reset}
+                          >
+                            Cancel
+                          </Button>
+                        </ButtonToolbar>
+                      </form> */}
+                      <form
+                        action="/image"
+                        encType="multipart/form-data"
+                        method="POST"
+                      >
                         <div className="row">
                           <div className="col-lg-6">
                             <div className="mb-3">
@@ -345,25 +694,42 @@ const MainContent = () => {
                                 }}
                                 value={price}
                               />
+                              {/* <label for="exampleFormControlFile1">
+                              Product Image
+                              </label>
+                              <input
+                                type="file"
+                                class="form-control-file"
+                                id="exampleFormControlFile1"
+                                onChange={(e) => {
+                                  setPrice(e.target.value);
+                                }}
+                                value={price}
+                              ></input> */}
                             </div>
                           </div>
                           <div className="col-lg-6">
                             <div className="mb-3">
                               <label
-                                htmlFor="phonenumberInput"
+                                htmlFor="exampleFormControlFile1"
                                 className="form-label"
                               >
                                 Product Image
                               </label>
                               <input
-                                type="number"
+                                type="file"
+                                name="image"
                                 className="form-control"
                                 id="phonenumberInput"
+                                accept=".png, .jpg, .jpeg"
                                 placeholder="Submit your product's image"
-                                onChange={(e) => {
-                                  setImage(e.target.value);
-                                }}
-                                value={image}
+                                // webkitdirectory ={true}
+                                // onChange={(e) => {
+                                //   setImage(e.target.files[0]);
+                                //   // setImage(e.target.value);
+                                // }}
+                                onChange={imageHandler}
+                                // value={image}
                               />
                             </div>
                           </div>
@@ -419,117 +785,6 @@ const MainContent = () => {
                         </div>
                       </form>
                     </div>
-                    {/* <div className="tab-pane" id="businessDetails" role="tabpanel">
-                                    <form action="#">
-                                        <div className="row">
-                                            <div className="col-lg-12">
-                                                <div className="mb-3">
-                                                    <label htmlFor="companynameInput" className="form-label">Company Name</label>
-                                                    <input type="text" className="form-control" id="companynameInput" placeholder="Enter your company name"/>
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-6">
-                                                <div className="mb-3">
-                                                    <label htmlFor="choices-single-default" className="form-label">Company Type</label>
-                                                    <select className="form-control" data-trigger name="choices-single-default" id="choices-single-default">
-                                                        <option value="">Select type</option>
-                                                        <option value="All" selected>All</option>
-                                                        <option value="Merchandising">Merchandising</option>
-                                                        <option value="Manufacturing">Manufacturing</option>
-                                                        <option value="Partnership">Partnership</option>
-                                                        <option value="Corporation">Corporation</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-6">
-                                                <div className="mb-3">
-                                                    <label htmlFor="pancardInput" className="form-label">Pan Card Number</label>
-                                                    <input type="text" className="form-control" id="pancardInput" placeholder="Enter your pan-card number"/>
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-4">
-                                                <div className="mb-3">
-                                                    <label htmlFor="websiteInput" className="form-label">Website</label>
-                                                    <input type="url" className="form-control" id="websiteInput" placeholder="Enter your URL"/>
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-4">
-                                                <div className="mb-3">
-                                                    <label htmlFor="faxInput" className="form-label">Fax</label>
-                                                    <input type="text" className="form-control" id="faxInput" placeholder="Enter your fax"/>
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-4">
-                                                <div className="mb-3">
-                                                    <label htmlFor="companyemailInput" className="form-label">Email</label>
-                                                    <input type="email" className="form-control" id="companyemailInput" placeholder="Enter your email"/>
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-6">
-                                                <div className="mb-3">
-                                                    <label htmlFor="worknumberInput" className="form-label">Number</label>
-                                                    <input type="number" className="form-control" id="worknumberInput" placeholder="Enter your number"/>
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-6">
-                                                <div className="mb-3">
-                                                    <label htmlFor="companylogoInput" className="form-label">Company Logo</label>
-                                                    <input type="file" className="form-control" id="companylogoInput"/>
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-12">
-                                                <div className="hstack gap-2 justify-content-end">
-                                                    <button className="btn btn-link link-success text-decoration-none fw-medium" data-bs-dismiss="modal"><i className="ri-close-line me-1 align-middle"></i> Close</button>
-                                                    <button type="submit" className="btn btn-primary"><i className="ri-save-3-line align-bottom me-1"></i> Save</button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </form>
-                                </div>
-                                <div className="tab-pane" id="bankDetails" role="tabpanel">
-                                    <form action="#">
-                                        <div className="row">
-                                            <div className="col-lg-6">
-                                                <div className="mb-3">
-                                                    <label htmlFor="banknameInput" className="form-label">Bank Name</label>
-                                                    <input type="text" className="form-control" id="banknameInput" placeholder="Enter your bank name"/>
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-6">
-                                                <div className="mb-3">
-                                                    <label htmlFor="branchInput" className="form-label">Branch</label>
-                                                    <input type="text" className="form-control" id="branchInput" placeholder="Branch"/>
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-12">
-                                                <div className="mb-3">
-                                                    <label htmlFor="accountnameInput" className="form-label">Account Holder Name</label>
-                                                    <input type="text" className="form-control" id="accountnameInput" placeholder="Enter account holder name"/>
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-6">
-                                                <div className="mb-3">
-                                                    <label htmlFor="accountnumberInput" className="form-label">Account Number</label>
-                                                    <input type="number" className="form-control" id="accountnumberInput" placeholder="Enter account number"/>
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-6">
-                                                <div className="mb-3">
-                                                    <label htmlFor="ifscInput" className="form-label">IFSC</label>
-                                                    <input type="number" className="form-control" id="ifscInput" placeholder="IFSC"/>
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-12">
-                                                <div className="hstack gap-2 justify-content-end">
-                                                    <button className="btn btn-link link-success text-decoration-none fw-medium" data-bs-dismiss="modal"><i className="ri-close-line me-1 align-middle"></i> Close</button>
-                                                    <button type="submit" className="btn btn-primary"><i className="ri-save-3-line align-bottom me-1"></i> Save</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div> */}
                   </div>
                 </div>
               </div>

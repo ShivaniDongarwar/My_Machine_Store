@@ -1,13 +1,19 @@
 import { Link, useNavigate } from "react-router-dom";
+import {useSearchParams} from "react-router-dom"
+
 import { ToastContainer, toast } from "react-toastify";
 // import { useState } from "react";
 import { LOG_OUT, VENDOR_LOG_OUT } from "../api/apiEndpoints";
 import axios from "../api/axios";
 const Header = ({ toggle }) => {
-  const superAdminID = localStorage.getItem("superAdminID");
-  const { logo, userName } = JSON.parse(localStorage.getItem("vendor"));
-  const data = JSON.parse(localStorage.getItem("vendor"));
-  console.log("data===>", data);
+  const [searchParam]=useSearchParams();
+
+  // const superAdminID = localStorage.getItem("superAdminID");
+  // const superAdminID = searchParam.get("superAdminId");
+
+  // const { logo, userName } = JSON.parse(localStorage.getItem("vendor"));
+  const data = JSON.parse(localStorage.getItem("vendor")) || ""
+  // console.log("data===>", data);
   // const [response, setResponse] = useState({});
   const navigate = useNavigate();
   const logOutHndler = async (e) => {
@@ -1215,79 +1221,150 @@ const Header = ({ toggle }) => {
               </div>
             </div>
             <div className="dropdown ms-sm-3 header-item topbar-user">
-              <button
-                type="button"
+            <button  type="button"
                 className="btn"
                 id="page-header-user-dropdown"
                 data-bs-toggle="dropdown"
                 aria-haspopup="true"
-                aria-expanded="false"
-              >
+                aria-expanded="false">
                 <span className="d-flex align-items-center">
-                  <img
-                    className="rounded-circle header-profile-user"
-                    src="assets/images/users/avatar-1.jpg"
-                    alt="Header Avatar"
-                  />
-                  <span className="text-start ms-xl-2">
-                    <span className="d-none d-xl-inline-block ms-1 fw-medium user-name-text">
-                      My Machine Store
-                    </span>
-                    <span className="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">
-                      Founder
+                    <img
+                      className="rounded-circle header-profile-user"
+                      src="assets/images/users/avatar-1.jpg"
+                      alt="Header Avatar"
+                    />
+                    <span className="text-start ms-xl-2">
+                      <span className="d-none d-xl-inline-block ms-1 fw-medium user-name-text">
+                        My Machine Store
+                      </span>
+                      <span className="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">
+                        Founder
+                      </span>
                     </span>
                   </span>
-                </span>
-              </button>
-              {superAdminID ? (
-                <div className="dropdown-menu dropdown-menu-end">
-                  {/* item*/}
-                  <h6 className="dropdown-header">Welcome Anna!</h6>
-                  <Link
-                    to={"/profile"}
-                    className="dropdown-item"
-                    href="pages-profile.html"
-                  >
-                    <i className="mdi mdi-account-circle text-muted fs-16 align-middle me-1" />
-                    <span className="align-middle">Profile</span>
-                  </Link>
+                </button>
 
-                  <button
-                    className="dropdown-item"
-                    href="#"
-                    onClick={logOutHndler}
-                  >
-                    <i className="mdi mdi-logout text-muted fs-16 align-middle me-1" />{" "}
-                    <span className="align-middle" data-key="t-logout">
-                      Logout
+                  <div className="dropdown-menu dropdown-menu-end">
+                    <h6 className="dropdown-header">Welcome Anna!</h6>
+                    <Link
+                      to={"/profile"}
+                      className="dropdown-item"
+                      href="pages-profile.html"
+                    >
+                      <i className="mdi mdi-account-circle text-muted fs-16 align-middle me-1" />
+                      <span className="align-middle">Profile</span>
+                    </Link>
+
+                    <button
+                      className="dropdown-item"
+                      href="#"
+                      onClick={logOutHndler}
+                    >
+                      <i className="mdi mdi-logout text-muted fs-16 align-middle me-1" />{" "}
+                      <span className="align-middle" data-key="t-logout">
+                        Logout
+                      </span>
+                    </button>
+                  </div>
+              {/* {superAdminID ? (
+                <>
+                <button  type="button"
+                className="btn"
+                id="page-header-user-dropdown"
+                data-bs-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">
+                <span className="d-flex align-items-center">
+                    <img
+                      className="rounded-circle header-profile-user"
+                      src="assets/images/users/avatar-1.jpg"
+                      alt="Header Avatar"
+                    />
+                    <span className="text-start ms-xl-2">
+                      <span className="d-none d-xl-inline-block ms-1 fw-medium user-name-text">
+                        My Machine Store
+                      </span>
+                      <span className="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">
+                        Founder
+                      </span>
                     </span>
-                  </button>
-                </div>
+                  </span>
+                </button>
+
+                  <div className="dropdown-menu dropdown-menu-end">
+                    <h6 className="dropdown-header">Welcome Anna!</h6>
+                    <Link
+                      to={"/profile"}
+                      className="dropdown-item"
+                      href="pages-profile.html"
+                    >
+                      <i className="mdi mdi-account-circle text-muted fs-16 align-middle me-1" />
+                      <span className="align-middle">Profile</span>
+                    </Link>
+
+                    <button
+                      className="dropdown-item"
+                      href="#"
+                      onClick={logOutHndler}
+                    >
+                      <i className="mdi mdi-logout text-muted fs-16 align-middle me-1" />{" "}
+                      <span className="align-middle" data-key="t-logout">
+                        Logout
+                      </span>
+                    </button>
+                  </div>
+                </>
               ) : (
-                <div className="dropdown-menu dropdown-menu-end">
-                  {/* item*/}
-                  <h6 className="dropdown-header">Welcome {userName}!</h6>
-                  <Link
-                    to={"/profile"}
-                    className="dropdown-item"
-                    href="pages-profile.html"
-                  >
-                    <i className="mdi mdi-account-circle text-muted fs-16 align-middle me-1" />{" "}
-                    <span className="align-middle">Profile</span>
-                  </Link>
+                <>
+                <button  type="button"
+                className="btn"
+                id="page-header-user-dropdown"
+                data-bs-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">
+                <span className="d-flex align-items-center">
+                    <img
+                      className="rounded-circle header-profile-user"
+                      src="assets/images/users/avatar-1.jpg"
+                      alt="Header Avatar"
+                    />
+                    <span className="text-start ms-xl-2">
+                      <span className="d-none d-xl-inline-block ms-1 fw-medium user-name-text">
+                       {data?.company_name}
+                      </span>
+                      <span className="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">
 
-                  <button
-                    className="dropdown-item"
-                    href="#"
-                    onClick={clickHandler}
-                  >
-                    <i className="mdi mdi-logout text-muted fs-16 align-middle me-1" />{" "}
-                    <span className="align-middle" data-key="t-logout">
-                      Logout
+                      </span>
                     </span>
-                  </button>
-                </div>
-              )}
+                  </span>
+                </button>
+
+                  <div className="dropdown-menu dropdown-menu-end">
+                    <h6 className="dropdown-header">
+                      Welcome {data?.userName}!
+                    </h6>
+                    <Link
+                      to={"/profile"}
+                      className="dropdown-item"
+                      href="pages-profile.html"
+                    >
+                      <i className="mdi mdi-account-circle text-muted fs-16 align-middle me-1" />{" "}
+                      <span className="align-middle">Profile</span>
+                    </Link>
+
+                    <button
+                      className="dropdown-item"
+                      href="#"
+                      onClick={clickHandler}
+                    >
+                      <i className="mdi mdi-logout text-muted fs-16 align-middle me-1" />{" "}
+                      <span className="align-middle" data-key="t-logout">
+                        Logout
+                      </span>
+                    </button>
+                  </div>
+                </>
+              )} */}
             </div>
           </div>
         </div>

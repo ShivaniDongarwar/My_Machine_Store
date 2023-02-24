@@ -19,8 +19,15 @@ const SidebarData = [
       {
         idx: 1,
         id: "sidebarApps",
-        title: "Company List",
+        title: "Vendors",
         href: "Companylist",
+        datakey: "t-sellers",
+      },
+      {
+        idx: 2,
+        id: "sidebarApps",
+        title: "Add Company",
+        href: "AddCompany",
         datakey: "t-sellers",
       },
     ],

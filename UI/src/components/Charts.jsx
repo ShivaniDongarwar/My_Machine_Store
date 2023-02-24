@@ -87,48 +87,54 @@ const Charts = () => {
   ];
   return (
     <>
-      <div className="card-body p-0 pb-2">
-        <div className="w-100">
-          <ResponsiveContainer>
-            <ComposedChart
-              width={400}
-              height={300}
-              data={data}
-              margin={{
-                top: 0,
-                right: 0,
-                left: 0,
-                bottom: 0,
-              }}
-            >
-              <CartesianGrid stroke="#f5f5f5" vertical={false} />
-              <XAxis
-                dataKey="month"
-                interval={data.length - 2}
-                tickLine={false}
-                axisLine={{ stroke: "#f5f5f5" }}
-              />
-              <Tooltip />
-              <Legend verticalAlign="top" align="left" height={36} />
-        <Bar
-          radius={[10, 10, 0, 0]}
-          dataKey="machines"
-          barSize={20}
-          fill="#F0F2F8"
-          yAxisId="left"
-          legendType="rect"
-          name="Total Items"
-        />
-            </ComposedChart>
-          </ResponsiveContainer>
-          <div
-            id="customer_impression_charts"
-            data-colors='["--vz-info", "--vz-primary", "--vz-danger"]'
-            className="apex-charts"
-            dir="ltr"
-          />
+
+        <div className="page-content">
+          <div className="container-fluid">
+            <div className="card-body p-0 pb-2">
+              <div className="w-100">
+                <ResponsiveContainer>
+                  <ComposedChart
+                    width={400}
+                    height={300}
+                    data={data}
+                    margin={{
+                      top: 0,
+                      right: 0,
+                      left: 0,
+                      bottom: 0,
+                    }}
+                  >
+                    <CartesianGrid stroke="#f5f5f5" vertical={false} />
+                    <XAxis
+                      dataKey="month"
+                      interval={data.length - 2}
+                      tickLine={false}
+                      axisLine={{ stroke: "#f5f5f5" }}
+                    />
+                    <Tooltip />
+                    <Legend verticalAlign="top" align="left" height={36} />
+                    <Bar
+                      radius={[10, 10, 0, 0]}
+                      dataKey="machines"
+                      barSize={20}
+                      fill="#F0F2F8"
+                      yAxisId="left"
+                      legendType="rect"
+                      name="Total Items"
+                    />
+                  </ComposedChart>
+                </ResponsiveContainer>
+                <div
+                  id="customer_impression_charts"
+                  data-colors='["--vz-info", "--vz-primary", "--vz-danger"]'
+                  className="apex-charts"
+                  dir="ltr"
+                />
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+
     </>
   );
 };

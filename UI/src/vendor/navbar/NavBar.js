@@ -17,7 +17,7 @@ const NavBar = ({ toggle }) => {
         toast.success("Success Notification !", {
           position: toast.POSITION.TOP_RIGHT,
         });
-        localStorage.clear("vendor");
+        // localStorage.clear("vendor");
         navigate("/");
       }
     } catch (err) {
@@ -1212,7 +1212,8 @@ const NavBar = ({ toggle }) => {
                   <span className="d-flex align-items-center">
                     <img
                       className="rounded-circle header-profile-user"
-                      src={logo}
+                      // src={logo}
+                      src={`http://localhost:5001/${logo}` || ""}
                       // src="assets/images/users/avatar-1.jpg"
                       alt="Header Avatar"
                     />
@@ -1228,8 +1229,13 @@ const NavBar = ({ toggle }) => {
                 </button>
                 <div className="dropdown-menu dropdown-menu-end">
                   {/* item*/}
-                  <h6 className="dropdown-header">Welcome {userName}!</h6>
-                  <Link to={"/profile"} className="dropdown-item" href="pages-profile.html">
+                  {/* <h6 className="dropdown-header">Welcome {userName}!</h6> */}
+                  <h6 className="dropdown-header">Welcome Api!</h6>
+                  <Link
+                    to={"/profile"}
+                    className="dropdown-item"
+                    href="pages-profile.html"
+                  >
                     <i className="mdi mdi-account-circle text-muted fs-16 align-middle me-1" />{" "}
                     <span className="align-middle">Profile</span>
                   </Link>

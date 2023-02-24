@@ -392,9 +392,9 @@
     top: 4px!important;
 }
 @media (min-width:768px) {
-    .topbar-user {
-    background-color: var(--vz-topbar-user-bg);
-}
+    /* .topbar-user { */
+    /* background-color: var(--vz-topbar-user-bg); */
+/* } */
 }.topbar-user .dropdown-menu {
     top: 6px!important;
 }
@@ -4957,7 +4957,7 @@ a, button {
     color: #212529;
 }
 .card-title {
-    font-size: 16px;
+    font-size: 25px;
     margin: 0 0 7px 0;
 }
 .card-title-desc {
@@ -8591,6 +8591,7 @@ th.gridjs-th-sort:focus, th.gridjs-th-sort:hover {
 .gridjs-search {
     position: relative;
     float: left;
+    /* padding-left: 30px; */
 }
 .gridjs-search::before {
     content: "\f0d1";

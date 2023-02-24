@@ -18,7 +18,7 @@ const Sidebar = ({onToggle, toggle}) => {
       <>
         <div
           className="app-menu navbar-menu"
-          style={{ width: toggle ? "70px" : "270px" }}
+          style={{ width: toggle ? "70px" : "253px" }}
         >
           {/* LOGO */}
           <div className="navbar-brand-box flexx">
@@ -90,7 +90,7 @@ const Sidebar = ({onToggle, toggle}) => {
                     >
 
                       <Link
-                        to={`${data.submenu ? `${data.href}` : "/"}`}
+                        to={"vendorAdminPanel" || "/"}
                         className="nav-link menu-link"
                         data-bs-toggle={`${data.submenu ? "collapse" : ""}`}
                         aria-expanded={`${data.submenu ? true : false}`}

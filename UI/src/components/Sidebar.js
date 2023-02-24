@@ -2,14 +2,18 @@ import { useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
-import { Link } from "react-router-dom";
+import { Link,useSearchParams } from "react-router-dom";
+
 import SidebarData from "../data/SidebarData";
 import { SideBarDataVender} from "../vendor/sidebar/SideBarDataVender";
 
 
 const Sidebar = ({ onToggle, toggle }) => {
   const [clicked, setClicked] = useState(false);
-  const id = localStorage.getItem("superAdminID");
+  const [searchParam]=useSearchParams();
+  // const id = localStorage.getItem("superAdminID")||"";
+  // const superAdminID = searchParam.get("superAdminId");
+  const superAdminID = localStorage.getItem("superAdminID")||"";
   const handleDropdown = (index) => {
     console.log(index);
     if (clicked === index) {
@@ -23,7 +27,7 @@ const Sidebar = ({ onToggle, toggle }) => {
     <>
       <div
         className="app-menu navbar-menu"
-        style={{ width: toggle ? "70px" : "270px" }}
+        style={{ width: toggle ? "70px" : "253px" }}
       >
         {/* LOGO */}
         <div className="navbar-brand-box flexx">
@@ -85,7 +89,7 @@ const Sidebar = ({ onToggle, toggle }) => {
                   Menu
                 </span>
               </li>
-              {id
+              {superAdminID
                 ? SidebarData.map((data) => {
                     return (
                       <li

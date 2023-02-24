@@ -1,10 +1,10 @@
 // import axios from "../api/axios";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 // import { useDispatch } from "react-redux";
 // import { adminAction } from "../reducers/superAdmin/SuperAdminAuthAction";
 // import { SUPER_ADMIN, SUPER_ADMIN_LOG_IN } from "../api/apiEndpoints";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate, createSearchParams } from "react-router-dom";
 import { SUPER_ADMIN } from "../api/apiEndpoints";
 import axios from "../api/axios";
 const Login = () => {
@@ -17,7 +17,7 @@ const Login = () => {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
-  const onSubmit = async (data,e) => {
+  const onSubmit = async (data, e) => {
     e.stopPropagation();
     try {
       const auth = await axios.post(SUPER_ADMIN, {
@@ -25,12 +25,24 @@ const Login = () => {
         password: data.password,
       });
       console.log("auth===>", auth);
-      console.log("superAdminID",localStorage.setItem("superAdminID", JSON.stringify(auth.data.result.id)));
+      console.log(
+        "superAdminID",
+        localStorage.setItem(
+          "superAdminID",
+          JSON.stringify(auth.data.result.id)
+        )
+      );
       if (auth.status === 200) {
         toast.success("Success Notification !", {
           position: toast.POSITION.TOP_RIGHT,
         });
-        navigate("/superAdmin");
+        // navigate("/sidebarDashboards");
+        navigate({
+          pathname: "/sidebarDashboards",
+          search: createSearchParams({
+            superAdminId: auth.data.result.id
+          }).toString(),
+        });
       }
     } catch (err) {
       console.log("message====>", err.message);
@@ -41,15 +53,14 @@ const Login = () => {
 
     // setRes({email:data.email,password:data.password})
     // dispatch(adminAction({email:data.email,password:data.password}));
-
   };
-//   console.log("res===>",res)
-//  useEffect(()=>{
-//   if(res){
-//     dispatch(adminAction(res))
-//     navigate("/superAdmin");
-//   }
-//  },[dispatch,res])
+  //   console.log("res===>",res)
+  //  useEffect(()=>{
+  //   if(res){
+  //     dispatch(adminAction(res))
+  //     navigate("/superAdmin");
+  //   }
+  //  },[dispatch,res])
   return (
     <>
       <div className="auth-page-wrapper auth-bg-cover py-5 d-flex justify-content-center align-items-center min-vh-100">
@@ -140,9 +151,7 @@ const Login = () => {
                       <div className="p-lg-5 p-4">
                         <div>
                           <h5 className="text-primary">Welcome Back !</h5>
-                          <p className="text-muted">
-                          Log in to your account.
-                          </p>
+                          <p className="text-muted">Log in to your account.</p>
                         </div>
 
                         <div className="mt-4">
@@ -177,14 +186,6 @@ const Login = () => {
                             </div>
 
                             <div className="mb-3">
-                              <div className="float-end">
-                                <a
-                                  href="auth-pass-reset-basic.html"
-                                  className="text-muted"
-                                >
-                                  Forgot password?
-                                </a>
-                              </div>
                               <label
                                 className="form-label"
                                 htmlFor="password-input"
@@ -217,21 +218,6 @@ const Login = () => {
                                   <i className="ri-eye-fill align-middle"></i>
                                 </button>
                               </div>
-                            </div>
-
-                            <div className="form-check">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                value=""
-                                id="auth-remember-check"
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="auth-remember-check"
-                              >
-                                Remember me
-                              </label>
                             </div>
 
                             <div className="mt-4">

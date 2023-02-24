@@ -8,6 +8,19 @@ export const mail = async (req, res) => {
     const newUser = await enquiry.findOne({
       _id: id,
     });
+    // if (newUser) {
+    //   await enquiry.findOneAndUpdate(
+    //     { _id: id },
+    //     {
+    //       $addToSet: {
+    //         "approve_vendor.$[].company_name": newUser.company_name,
+    //         // "approve_vendor.$[].email": newUser.email,
+    //         // "approve_vendor.$[].phone_no": newUser.phone_no,
+    //         // "approve_vendor.$[].location": newUser.location,
+    //       },
+    //     }
+    //   );
+    // }
     console.log("newUser===>", newUser);
     const transport = nodemailer.createTransport({
       service: "gmail",
@@ -33,7 +46,7 @@ export const mail = async (req, res) => {
     const newUser2 = await transport.sendMail(mailOptions);
 
     console.log("newUser===>", newUser);
-    return res.status(200).json({ result: newUser2 });
+    return res.status(200).json({ result: newUser });
   } catch (err) {
     console.log("error----->", err.message);
     return res.status(500).json("someting went wrong......");

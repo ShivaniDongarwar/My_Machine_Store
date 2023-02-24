@@ -1,13 +1,13 @@
-
-const MailData=[
+const MailData = [
   {
     idx: 1,
     htmlFor: "name",
     id: "name",
     placeholder: "Enter Your Company Name ",
     name: "company_name",
-    title:"Company Name",
-    required:"required"
+    title: "Company Name",
+    required: "required",
+    type: "text",
   },
   {
     idx: 2,
@@ -15,8 +15,9 @@ const MailData=[
     id: "address",
     placeholder: "address",
     name: "address",
-    title:"Address ",
-    required:"required"
+    title: "Address ",
+    required: "required",
+    type: "text",
   },
   {
     idx: 3,
@@ -24,8 +25,9 @@ const MailData=[
     id: "city",
     placeholder: "city",
     name: "city",
-    title:"city ",
-    required:"required"
+    title: "city ",
+    required: "required",
+    type: "text",
   },
   {
     idx: 4,
@@ -33,8 +35,9 @@ const MailData=[
     id: "state",
     placeholder: "state",
     name: "state",
-    title:"State",
-    required:"required"
+    title: "State",
+    required: "required",
+    type: "text",
   },
   {
     idx: 5,
@@ -42,8 +45,9 @@ const MailData=[
     id: "country",
     placeholder: "country",
     name: "country",
-    title:"Country",
-    required:"required"
+    title: "Country",
+    required: "required",
+    type: "text",
   },
   {
     idx: 6,
@@ -51,8 +55,9 @@ const MailData=[
     id: "phoneNo",
     placeholder: "phoneNo",
     name: "phoneNo",
-    title:"Phone Number",
-    required:"required"
+    title: "Phone Number",
+    required: "required",
+    type: "text",
   },
   {
     idx: 7,
@@ -60,8 +65,9 @@ const MailData=[
     id: "mobileNo",
     placeholder: "mobileNo",
     name: "mobileNo",
-    title:"mobileNo",
-    required:"required"
+    title: "mobileNo",
+    required: "required",
+    type: "text",
   },
   {
     idx: 8,
@@ -69,8 +75,9 @@ const MailData=[
     id: "emailId",
     placeholder: "emailId",
     name: "emailId",
-    title:"Email Id",
-    required:"required"
+    title: "Email Id",
+    required: "required",
+    type: "text",
   },
   {
     idx: 9,
@@ -78,8 +85,9 @@ const MailData=[
     id: "ownerName",
     placeholder: "ownerName",
     name: "ownerName",
-    title:"Owner Name",
-    required:"required"
+    title: "Owner Name",
+    required: "required",
+    type: "text",
   },
   {
     idx: 10,
@@ -87,8 +95,10 @@ const MailData=[
     id: "logo",
     placeholder: "logo",
     name: "logo",
-    title:"Company logo",
-    required:"required"
+    title: "Company logo",
+    required: "required",
+    accept:".png, .jpg, .jpeg",
+    type: "file",
   },
   {
     idx: 11,
@@ -96,8 +106,9 @@ const MailData=[
     id: "regNo",
     placeholder: "regNo",
     name: "regNo",
-    title:"Company registration number",
-    required:"required"
+    title: "Company registration number",
+    required: "required",
+    type: "text",
   },
   {
     idx: 12,
@@ -105,8 +116,9 @@ const MailData=[
     id: "panNo",
     placeholder: "panNo",
     name: "panNo",
-    title:"Company Pan-Card No",
-    required:"required"
+    title: "Company Pan-Card No",
+    required: "required",
+    type: "text",
   },
   {
     idx: 13,
@@ -114,8 +126,9 @@ const MailData=[
     id: "discription",
     placeholder: "discription",
     name: "discription",
-    title:"Company discription",
-    required:"required"
+    title: "Company discription",
+    required: "required",
+    type: "text",
   },
   {
     idx: 14,
@@ -123,8 +136,9 @@ const MailData=[
     id: "type",
     placeholder: "type",
     name: "type",
-    title:"Company type",
-    required:"required"
+    title: "Company type",
+    required: "required",
+    type: "text",
   },
   {
     idx: 15,
@@ -132,8 +146,9 @@ const MailData=[
     id: "userName",
     placeholder: "User Name",
     name: "userName",
-    title:"userName",
-    required:"required"
+    title: "userName",
+    required: "required",
+    type: "text",
   },
   {
     idx: 16,
@@ -141,11 +156,10 @@ const MailData=[
     id: "password",
     placeholder: "password",
     name: "password",
-    title:"Password",
-    required:"required"
+    title: "Password",
+    required: "required",
+    type: "text",
   },
+];
 
-
-]
-
-export default MailData
+export default MailData;

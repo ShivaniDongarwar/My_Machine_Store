@@ -12,7 +12,7 @@ function CompanyProfile(props) {
               <div className="profile-foreground position-relative mx-n4 mt-n4">
                 <div className="profile-wid-bg">
                   <img
-                    src="assets/images/profile-bg.jpg"
+                    src="assets/images/offer2.png"
                     alt=""
                     className="profile-wid-img"
                   />
@@ -23,7 +23,8 @@ function CompanyProfile(props) {
                   <div className="col-auto">
                     <div className="avatar-lg">
                       <img
-                        src={ele.logo}
+                        // src={ele.logo}
+                        src={`http://localhost:5001/${ele.logo}` || ""}
                         alt="user-img"
                         className="img-thumbnail rounded-circle"
                       />

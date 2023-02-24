@@ -4,6 +4,11 @@ export const SUPER_ADMIN_LOG_IN = "/enquiry/superAdminLogIn";
 
 //for getting trade Enquiry
 export const TRADE_ENQUIRY = "/enquiry/getEnquiry";
+export const User_ENQUIRY = "/enquiry/getUserEnquiry";
+
+
+//for product List
+export const superAdminProductList = "/enquiry/superAdminProductList";
 
 //mail
 export const Mail = "/enquiry/approvedMail";
@@ -27,3 +32,12 @@ export const PRODUCT_LIST = "/enquiry/productList";
 export const LOG_OUT = "/enquiry/logOut";
 //for vendor log out
 export const VENDOR_LOG_OUT = "/enquiry/vendorlogOut";
+//latestTradeEnquiry
+export const latestTradeEnquiry = "/enquiry/latestTradeEnquiry";
+//latestUserEnquiry
+export const latestUserEnquiry = "/enquiry/latestUserEnquiry";
+//latestproduct
+export const latestProduct = "/enquiry/latestProduct";
+//for superAdmin_addCompany
+export const AdminSignUp = "/enquiry/addVendor";
+export const AdminLogIn = "/enquiry/addCompany_Sign_up";

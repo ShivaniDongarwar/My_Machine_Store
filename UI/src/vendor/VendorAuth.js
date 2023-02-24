@@ -1,15 +1,15 @@
 import axios from "../api/axios";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, createSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 // import { vendorAction } from "../reducers/vendor/VendorAuthAction";
 // import { useEffect } from "react";
 // import { useState } from "react";
 import { VENDOR_AUTH } from "../api/apiEndpoints";
+import { useState } from "react";
 
 function VendorAuth(props) {
-  // const [res,setRes]=useState(null)
 
   // const dispatch=useDispatch();
   const {
@@ -32,12 +32,18 @@ function VendorAuth(props) {
           "vendor",
           JSON.stringify(detail.data.result.vendorDetails)
         );
-        console.log("vendorid===>", vendorid);
-        // setRes(vendorid)
+        console.log("vendorid===>",vendorid);
+        navigate({
+          pathname: "/vendorAdminPanel",
+          search: createSearchParams({
+            vendorId: detail.data.result.vendorDetails._id,
+          }).toString(),
+        });
+        // navigate("/vendorAdminPanel")
+
         toast.success("Success Notification !", {
           position: toast.POSITION.TOP_RIGHT,
         });
-        navigate("/vendorAdminPanel");
       }
     } catch (err) {
       console.log("message====>", err.message);
@@ -45,10 +51,13 @@ function VendorAuth(props) {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
+
     // setRes({email:data.email,password:data.password})
 
     // dispatch(vendorAction({email:data.email,password:data.password}));
+
   };
+
   // console.log("res2===>",res)
 
   // useEffect(()=>{

@@ -7,6 +7,14 @@ const newSchema = new userSchema({
   password: { type: String, required: true },
   // tokens: { type: String, required: true },
   // tokens: [{ token: { type: String, required: true } }],
+  auth_date: {
+    type: Date,
+    default: Date.now
+},
+  auth_updated_date: {
+    type: Date,
+    default: Date.now
+}
 });
 export default mongoose.model("adminAuthentication", newSchema);
 

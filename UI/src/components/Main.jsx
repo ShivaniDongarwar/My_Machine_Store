@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 // import Charts from "./Charts";
 // import Counter from "./Counter";
 import Footer from "./Footer";
+import GridTable from "./gridTable/GridTable";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 
@@ -16,16 +17,17 @@ const Main = () => {
     setToggle((prev) => !prev);
   };
   return (
-    <>
+    <div id="layout-wrapper">
       <Sidebar onToggle={toggleButton} toggle={toggle} />
       <Header toggle={toggle} />
       {/* <Counter />
       <Charts /> */}
+      {/* <GridTable /> */}
       <div className={toggle ? "ml70" : "main-content"}>
         <Outlet />
         <Footer />
       </div>
-    </>
+    </div>
   );
 };
 
