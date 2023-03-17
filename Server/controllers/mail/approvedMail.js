@@ -4,7 +4,6 @@ import adminDetail from "../../modale/adminDetail.js";
 export const approvedMail = async (req, res) => {
   // console.log("req===>", req);
   console.log("req===>", req.body);
-  let img = req.file.path;
   const {
     company_name,
     address,
@@ -13,7 +12,7 @@ export const approvedMail = async (req, res) => {
     country,
     phoneNo,
     mobileNo,
-    emailId,
+    email,
     ownerName,
     logo,
     regNo,
@@ -42,9 +41,9 @@ export const approvedMail = async (req, res) => {
       country: country,
       phoneNo: phoneNo,
       mobileNo: mobileNo,
-      emailId: emailId,
+      emailId: email,
       ownerName: ownerName,
-      logo: img,
+      // logo: img,
       regNo: regNo,
       panNo: panNo,
       discription: discription,
@@ -52,13 +51,14 @@ export const approvedMail = async (req, res) => {
       userName: userName,
       password: hashedPassword,
     });
-    // const token = jwt.sign({ email: newUser.email, id: newUser._id }, "test", {
-    //   expiresIn: "1hr",
-    // });
-    // return res.status(200).json({ result: newUser });
-    return res
-      .status(200)
-      .json({ result: { userName: newUser.userName, logo: newUser.logo } });
+    if (req.file){
+      await adminDetail.create({logo:req.file.path});
+    }
+      // const token = jwt.sign({ email: newUser.email, id: newUser._id }, "test", {
+      //   expiresIn: "1hr",
+      // });
+      // return res.status(200).json({ result: newUser });
+      return res.status(200).json({ result: { result: newUser } });
     //  return res.status(200).json({ result: newUser, token:token });
   } catch (err) {
     console.log(err.message);
@@ -66,7 +66,7 @@ export const approvedMail = async (req, res) => {
   }
 };
 export const superAdmin_Addcompany_Login = async (req, res) => {
-  const { email, password, company_name, confirm_password } = req.body;
+  const { email, password, company_name } = req.body;
   try {
     const existinguser = await adminDetail.findOne({ emailId: email });
     if (existinguser) {
@@ -80,9 +80,11 @@ export const superAdmin_Addcompany_Login = async (req, res) => {
       company_name: company_name,
     });
     if (addCompany) {
-      res
-        .status(201)
-        .json({ message: "New user is created", result: addCompany._id });
+      res.status(201).json({
+        message: "New user is created",
+        result: addCompany._id,
+        emailId: addCompany.emailId,
+      });
     }
   } catch (error) {
     console.log(error);
@@ -92,7 +94,7 @@ export const superAdmin_Addcompany_Login = async (req, res) => {
 export const addCompany_Sign_up = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const exist = await adminDetail.findOne({ email: email });
+    const exist = await adminDetail.findOne({ emailId: email });
     if (!exist) {
       return res.status(404).json({ message: "No user found" });
     }
@@ -118,7 +120,10 @@ export const superAdminCompanyList = async (req, res) => {
   const total = await adminDetail.countDocuments({});
   try {
     const newUser = await adminDetail
-      .find({}, { company_name: 1, ownerName: 1, emailId: 1, phoneNo: 1 })
+      .find(
+        {},
+        { company_name: 1, ownerName: 1, emailId: 1, phoneNo: 1, status: 1 }
+      )
       .limit(pageSize)
       .skip(pageSize * page);
     console.log("newUser2===>", newUser);
@@ -131,17 +136,101 @@ export const superAdminCompanyList = async (req, res) => {
   }
 };
 
-export const CompanyDetail=async(req,res)=>{
+export const CompanyDetail = async (req, res) => {
   const { id } = req.query;
   try {
-    const productDetail=await adminDetail.find({ _id: id});
-    if(productDetail){
-      return res.status(200).json({result:productDetail})
-    }else {
-      return res.status(404).json("No detail found")
+    const productDetail = await adminDetail.find({ _id: id });
+    if (productDetail) {
+      return res.status(200).json({ result: productDetail });
+    } else {
+      return res.status(404).json("No detail found");
     }
   } catch (error) {
     console.log("error----->", error.message);
     return res.status(500).json("someting went wrong......");
   }
-}
+};
+
+export const AddCompanyDetail = async (req, res) => {
+  console.log("body", req.body);
+  const {
+    company_name,
+    address,
+    city,
+    state,
+    image,
+    country,
+    phoneNo,
+    email,
+    ownerName,
+    regNo,
+    panNo,
+    discription,
+    type,
+    password,
+    userName,
+    managerName,
+    status,
+  } = req.body;
+  const _id = req.body.companyId;
+  console.log("id===>", _id);
+  // let img = req.file.path;
+  const salt = bcrypt.genSaltSync(10);
+
+  const hashPassword = await bcrypt.hash(password, salt);
+
+  try {
+    const uData = await adminDetail
+      .findByIdAndUpdate(
+        _id,
+        // {
+        //   $set: req.body,
+        // },
+        {
+          company_name: company_name,
+          address: address,
+          city: city,
+          state: state,
+          // logo: img,
+          country: country,
+          phoneNo: phoneNo,
+          emailId: email,
+          ownerName: ownerName,
+          regNo: regNo,
+          panNo: panNo,
+          discription: discription,
+          type: type,
+          password: hashPassword,
+          userName: userName,
+          managerName: managerName,
+          status: status,
+        }
+      )
+      .clone();
+    if (req.file) {
+      await adminDetail.findByIdAndUpdate(_id, { logo: req.file.path }).clone();
+    }
+    if (uData) {
+      return res.status(200).json("Updated successfully");
+    } else {
+      return res.status(404).json("Something went wrong");
+    }
+  } catch (error) {
+    console.log("error----->", error.message);
+    return res.status(500).json("someting went wrong......");
+  }
+};
+export const deleteCompany = async (req, res) => {
+  console.log("delete====>", req.query.id);
+  const { id } = req.query;
+  try {
+    const newUser = await adminDetail.findByIdAndDelete({
+      _id: id,
+    });
+    console.log("newUser===>", newUser);
+    return res.status(200).json("Delete Successfully");
+  } catch (err) {
+    console.log("error----->", err.message);
+    return res.status(500).json("someting went wrong......");
+  }
+};

@@ -34,58 +34,52 @@ const SidebarData = [
   },
   {
     idx: 3,
-    title: "TradeAccountEnquiry",
-    href: "sidebarLayouts",
+    title: "Trade Enquiry",
+    href: "Enquirylist",
     datakey: "t-layouts",
     icon: <CategoryRoundedIcon />,
-    submenu: [
-      {
-        idx: 1,
-        id: "sidebarLayouts",
-        title: "Enquiry List",
-        href: "Enquirylist",
-        datakey: "t-datatables",
-      },
-      {
-        idx: 2,
-        id: "sidebarLayouts",
-        title: "Approved List",
-        href: "Approvedlist",
-        datakey: "t-datatables",
-      },
-    ],
+    // submenu: [
+    //   {
+    //     idx: 1,
+    //     id: "sidebarLayouts",
+    //     title: "Enquiry List",
+    //     href: "Enquirylist",
+    //     datakey: "t-datatables",
+    //   },
+
+    // ],
   },
   {
     idx: 4,
     title: "Products",
-    href: "sidebarLockScreen",
+    href: "Productlist",
     datakey: "t-layouts",
     icon: <CategoryRoundedIcon />,
-    submenu: [
-      {
-        idx: 1,
-        id: "sidebarLockScreen",
-        title: "Product List",
-        href: "Productlist",
-        datakey: "t-datatables",
-      },
-    ],
+    // submenu: [
+    //   {
+    //     idx: 1,
+    //     id: "sidebarLockScreen",
+    //     title: "Product List",
+    //     href: "Productlist",
+    //     datakey: "t-datatables",
+    //   },
+    // ],
   },
   {
     idx: 5,
-    title: "ProductsEnquiry",
-    href: "sidebarAuth",
+    title: "Customer  Enquiry",
+    href: "Productenquirylist",
     datakey: "t-layouts",
     icon: <CategoryRoundedIcon />,
-    submenu: [
-      {
-        idx: 1,
-        id: "sidebarAuth",
-        title: "Product Enquiry List",
-        href: "Productenquirylist",
-        datakey: "t-datatables",
-      },
-    ],
+    // submenu: [
+    //   {
+    //     idx: 1,
+    //     id: "sidebarAuth",
+    //     title: "Product Enquiry List",
+    //     href: "Productenquirylist",
+    //     datakey: "t-datatables",
+    //   },
+    // ],
   },
 ];
 

@@ -7,17 +7,30 @@ import {
   superAdminLogIn,
 } from "../controllers/admin/superAdminAuth.js";
 import {
+  addCompanyDetailVendor,
+  deleteEnquiry,
   enquiryDetail,
   getEnquiry,
+  updatedStatus,
+  updatedStatus_successful,
 } from "../controllers/enquiry/tardeEnquiry.js";
-import { addCompany_Sign_up, approvedMail, CompanyDetail, superAdminCompanyList, superAdmin_Addcompany_Login } from "../controllers/mail/approvedMail.js";
-import { mail } from "../controllers/mail/mail.js";
+import {
+  AddCompanyDetail,
+  addCompany_Sign_up,
+  approvedMail,
+  CompanyDetail,
+  deleteCompany,
+  superAdminCompanyList,
+  superAdmin_Addcompany_Login,
+} from "../controllers/mail/approvedMail.js";
+import { mail, sign_in_mail } from "../controllers/mail/mail.js";
 import { enquiry, getUserEnquiry } from "../controllers/user/enquiry.js";
 import {
   addVendoProduct,
   productList,
   productDetail,
   superAdminProductList,
+  deleteProduct,
 } from "../controllers/vendor/product.js";
 import { editProfile, profile } from "../controllers/vendor/profile.js";
 import { vendorAuth, vendorlogOut } from "../controllers/vendor/vendorAuth.js";
@@ -31,6 +44,7 @@ import {
   latestTradeEnquiries,
   latestUserEnquiries,
 } from "../controllers/latest/latest.js";
+import { productFilter } from "../controllers/filter/ProductFilter.js";
 // import { enquiryDetail } from "../controllers/enquiry.js";
 // import { admin } from "../controllers/admin.js";
 // import { edit } from "../controllers/edit.js";
@@ -44,9 +58,12 @@ import {
 const routes = express.Router();
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
+    console.log("file===>", req);
+
     cb(null, "uploads");
   },
   filename: function (req, file, cb) {
+    console.log("file===>", file);
     cb(null, file.originalname);
   },
 });
@@ -81,7 +98,7 @@ routes.post("/logOut", authenticate, logOut);
 routes.post("/vendorlogOut", vendorAuthrisation, vendorlogOut);
 routes.post("/detail", enquiryDetail);
 routes.get("/getEnquiry", getEnquiry);
-routes.post("/approvedMail", logo.single("logo"),  approvedMail);
+routes.post("/approvedMail", logo.single("logo"), approvedMail);
 routes.post("/mail", mail);
 routes.post("/vendorAdminLogIN", vendorAuth);
 // routes.post("/addProduct", vendorAuthrisation, addVendoProduct);
@@ -98,10 +115,25 @@ routes.get("/latestTradeEnquiry", latestTradeEnquiries);
 routes.get("/latestUserEnquiry", latestUserEnquiries);
 routes.get("/latestProduct", latestProduct);
 routes.get("/productDetail", productDetail);
+routes.delete("/deleteEnquiry", deleteEnquiry);
+routes.delete("/deleteCompany", deleteCompany);
+
 // for addvendor from super Admin
 routes.post("/addVendor", superAdmin_Addcompany_Login);
 routes.post("/signUpVendor", addCompany_Sign_up);
 routes.get("/superAdminCompanyList", superAdminCompanyList);
 routes.get("/companyDetail", CompanyDetail);
+routes.put("/addCompanyDetail", upload.single("logo"), AddCompanyDetail);
+routes.post("/signInMail", sign_in_mail);
+routes.post("/status", updatedStatus);
+routes.put("/successfulStatus", updatedStatus_successful);
+//for vendor detail add
+routes.put("/addCompanyDetailVendor",upload.single("logo"), addCompanyDetailVendor);
+
+
+//product
+routes.delete("/deleteProduct", deleteProduct);
+//filter
+routes.get("/filter", productFilter);
 
 export default routes;

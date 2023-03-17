@@ -27,6 +27,8 @@ const newSchema = new userSchema({
   supplier: { type: String },
   warranty: { type: String },
   weight: { type: String },
-  shortDiscription:{type:String}
+  shortDiscription:{type:String},
+  imageGallery:{type:String},
+  status: { type: String }
 });
 export default mongoose.model("addProduct", newSchema);

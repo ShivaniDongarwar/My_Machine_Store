@@ -6,6 +6,7 @@ function ProductDetailPage({ response }) {
   return (
     <>
       {response.map((ele) => {
+        console.log("img===>",ele.image)
         return (
           <div className="page-content" key={ele._id}>
             <div className="container-fluid">

@@ -90,7 +90,8 @@ const Sidebar = ({onToggle, toggle}) => {
                     >
 
                       <Link
-                        to={"vendorAdminPanel" || "/"}
+                        // to={"vendorAdminPanel" || "/"}
+                        to={`${data.href}`}
                         className="nav-link menu-link"
                         data-bs-toggle={`${data.submenu ? "collapse" : ""}`}
                         aria-expanded={`${data.submenu ? true : false}`}

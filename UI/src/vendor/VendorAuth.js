@@ -3,6 +3,9 @@ import { useForm } from "react-hook-form";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
 // import { vendorAction } from "../reducers/vendor/VendorAuthAction";
 // import { useEffect } from "react";
 // import { useState } from "react";
@@ -10,13 +13,20 @@ import { VENDOR_AUTH } from "../api/apiEndpoints";
 import { useState } from "react";
 
 function VendorAuth(props) {
+  const formSchema = Yup.object().shape({
+    password: Yup.string()
+      .required("Password is mendatory")
+      .min(3, "Password must be at 3 char long"),
 
+    email: Yup.string().required("Email is mendatory"),
+  });
+  const formOptions = { resolver: yupResolver(formSchema) };
   // const dispatch=useDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm(formOptions);
 
   const navigate = useNavigate();
   const logInHandler = async (data, e) => {
@@ -32,7 +42,7 @@ function VendorAuth(props) {
           "vendor",
           JSON.stringify(detail.data.result.vendorDetails)
         );
-        console.log("vendorid===>",vendorid);
+        console.log("vendorid===>", vendorid);
         navigate({
           pathname: "/vendorAdminPanel",
           search: createSearchParams({
@@ -55,7 +65,6 @@ function VendorAuth(props) {
     // setRes({email:data.email,password:data.password})
 
     // dispatch(vendorAction({email:data.email,password:data.password}));
-
   };
 
   // console.log("res2===>",res)
@@ -108,9 +117,9 @@ function VendorAuth(props) {
                   <div className="card-body p-4">
                     <div className="text-center mt-2">
                       <h5 className="text-primary">Welcome Back !</h5>
-                      <p className="text-muted">
+                      {/* <p className="text-muted">
                         Sign in to continue to Velzon.
-                      </p>
+                      </p> */}
                     </div>
                     <div className="p-2 mt-4">
                       {/* <form action="https://themesbrand.com/velzon/html/interactive/index.html"> */}
@@ -122,7 +131,9 @@ function VendorAuth(props) {
                           <input
                             type="text"
                             name="email"
-                            className="form-control"
+                            className={`form-control ${
+                              errors.email ? "is-invalid" : ""
+                            }`}
                             id="email"
                             placeholder="Enter Email"
                             {...register("email", {
@@ -133,22 +144,20 @@ function VendorAuth(props) {
                               },
                             })}
                           />
-                          {errors.email?.type === "required" && (
-                            <p role="alert" id="error">
-                              Enter your valid Email Address
-                            </p>
-                          )}
+                          <div className="invalid-feedback">
+                            {errors.email?.message}
+                          </div>
                         </div>
 
                         <div className="mb-3">
-                          <div className="float-end">
+                          {/* <div className="float-end">
                             <a
                               href="auth-pass-reset-basic.html"
                               className="text-muted"
                             >
                               Forgot password?
                             </a>
-                          </div>
+                          </div> */}
                           <label
                             className="form-label"
                             htmlFor="password-input"
@@ -159,29 +168,28 @@ function VendorAuth(props) {
                             <input
                               name="password"
                               type="password"
-                              className="form-control pe-5 password-input"
+                              className={`form-control ${
+                                errors.password ? "is-invalid" : ""
+                              }`}
                               placeholder="Enter password"
                               id="password"
                               {...register("password", { required: true })}
                               aria-invalid={errors.password ? "true" : "false"}
                             />
-                            {errors.password?.type === "required" && (
-                              <p role="alert" id="error">
-                                Enter valid password
-                              </p>
-                            )}
-
-                            <button
+                            <div className="invalid-feedback">
+                              {errors.password?.message}
+                            </div>
+                            {/* <button
                               className="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted "
                               type="button"
                               id="password-addon"
                             >
                               <i className="ri-eye-fill align-middle"></i>
-                            </button>
+                            </button> */}
                           </div>
                         </div>
 
-                        <div className="form-check">
+                        {/* <div className="form-check">
                           <input
                             className="form-check-input"
                             type="checkbox"
@@ -194,7 +202,7 @@ function VendorAuth(props) {
                           >
                             Remember me
                           </label>
-                        </div>
+                        </div> */}
 
                         <div className="mt-4">
                           <button

@@ -4,7 +4,7 @@ import SideBar from "../utils/SideBar";
 
 function LatestUserEnquiry() {
   // return <GridTable title="Latest User Enquiry" />;
-  return <SideBar title="Latest User Enquiry" URL={latestUserEnquiry}/>;
+  return <SideBar title="Latest User Enquiry" URL={latestUserEnquiry} latestStatus="_"/>;
 }
 
 export default LatestUserEnquiry;

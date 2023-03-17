@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 const userSchema = mongoose.Schema;
 const newSchema = new userSchema({
-  company_name: { type: String, required: true },
+  companyName: { type: String, required: true },
   email: { type: String, required: true },
-  phone_no: { type: String, required: true },
+  phoneNo: { type: String, required: true },
   location: { type: String, required: true },
   manager_name: { type: String },
   manager_number: { type: String, required: true },
@@ -15,8 +15,6 @@ const newSchema = new userSchema({
     type: Date,
     default: Date.now,
   },
-  approve_vendor: [
-    { company_name:{type:String} , email: String, phone_no: String, location: String },
-  ],
+  status: { type: String },
 });
 export default mongoose.model("enquires", newSchema);

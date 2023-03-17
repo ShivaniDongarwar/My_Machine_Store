@@ -23,12 +23,19 @@ import VendorProtectedRoute from "./VendorProtectedRoute";
 import AddCompany from "../components/company/AddCompany";
 import AddVendor from "../pages/AddCompany";
 import CompanyDetail from "../components/company/CompanyDetail";
+import Addproduct_SuperAdmin from "../components/company/EditCompany";
+import VenderPage from "../vendorDetailPage/VenderPage";
+import ThankYou from "../pages/ThankYou";
+import Filter from "../utils/FilterForm";
 function AllRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/enquiryForm" element={<EnquiryMail />} />
+      <Route path="/thankYou" element={<ThankYou />} />
+      {/* <Route path="/enquiryForm" element={<VenderPage />} /> */}
       <Route path="/mail" element={<VendorPage />} />
+      {/* <Route path="/mail" element={<VenderPage />} /> */}
 
       <Route path="/vendorAuth" element={<VendorAuth />} />
       {/* <Route path="/AddProduct" element={<Addproduct />} /> */}
@@ -47,7 +54,9 @@ function AllRoutes() {
         <Route path="/Approvedlist" element={<ApprovedList />} />
         <Route path="/Productlist" element={<ProductList />} />
         <Route path="/AddCompany" element={<AddCompany />} />
-        <Route path="/companyDetailPage" element={<CompanyDetail />} />
+        <Route path="/AddCompanySuperAdmin" element={<CompanyDetail />} />
+        <Route path="/productFilter" element={<Filter />} />
+        {/* <Route path="/companyDetailPage" element={<CompanyDetail />} /> */}
         {/* <Route path="/AddProduct" element={<Addproduct />} /> */}
         {/* <Route path="/ProductDetail" element={<ProductDetail />} /> */}
         <Route path="*" element={<NoMatch />} />

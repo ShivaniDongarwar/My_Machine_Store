@@ -5,11 +5,13 @@ function VendorPage() {
   return (
     <div
       className="layout-wrapper landing"
-      style={{ backgroundColor: "#000000" }}
     >
       <nav
-        className="navbar navbar-expand-lg navbar-landing navbar-light fixed-top"
+        className="navbar navbar-expand-lg navbar-landing navbar-light fixed-top vendor_nav"
         id="navbar"
+        style={{ backgroundColor: "black" }}
+
+
       >
         <div className="container">
           <a className="navbar-brand" href="index.html">

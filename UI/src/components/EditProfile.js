@@ -47,7 +47,7 @@ function EditProfile(props) {
                         htmlFor="profile-foreground-img-file-input"
                         className="profile-photo-edit btn btn-light"
                       >
-                        <i className="ri-image-edit-line align-bottom me-1" />{" "}
+                        <i className="ri-image-edit-line align-bottom me-1" />
                         Change Cover
                       </label>
                     </div>
@@ -62,7 +62,7 @@ function EditProfile(props) {
                     <div className="text-center">
                       <div className="profile-user position-relative d-inline-block mx-auto  mb-4">
                         <img
-                          src="assets/images/users/avatar-1.jpg"
+                        src={`http://localhost:5001/${ele.logo}` || ""}
                           className="rounded-circle avatar-xl img-thumbnail user-profile-image"
                           alt="user-profile-image"
                         />
@@ -82,7 +82,7 @@ function EditProfile(props) {
                           </label>
                         </div>
                       </div>
-                      <h5 className="fs-16 mb-1">{ele.userName}</h5>
+                      <h5 className="fs-16 mb-1">{ele.company_name}</h5>
                       <p className="text-muted mb-0">Vendor</p>
                     </div>
                   </div>

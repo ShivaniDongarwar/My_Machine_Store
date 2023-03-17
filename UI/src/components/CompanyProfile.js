@@ -33,7 +33,7 @@ function CompanyProfile(props) {
                   {/*end col*/}
                   <div className="col">
                     <div className="p-2">
-                      <h3 className="text-white mb-1">{ele.userName}</h3>
+                      <h3 className="text-white mb-1">{ele.company_name}</h3>
                       <p className="text-white-75">Owner &amp; Founder</p>
                       <div className="hstack text-white-50 gap-1">
                         <div className="me-2">

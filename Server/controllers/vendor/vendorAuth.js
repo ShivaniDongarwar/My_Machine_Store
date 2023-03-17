@@ -16,7 +16,7 @@ export const vendorAuth = async (req, res) => {
     // if (!userDetail) {
     //   return res.json({ message: "Add data" });
     // }
-    const isPasswordCrt = await bcrypt.compare(password, existinguser.password);
+    const isPasswordCrt =  bcrypt.compare(password, existinguser.password);
     if (!isPasswordCrt) {
       return res.status(400).json({ message: "Invalid credentials" });
     }

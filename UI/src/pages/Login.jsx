@@ -40,7 +40,7 @@ const Login = () => {
         navigate({
           pathname: "/sidebarDashboards",
           search: createSearchParams({
-            superAdminId: auth.data.result.id
+            superAdminId: auth.data.result.id,
           }).toString(),
         });
       }
@@ -63,15 +63,139 @@ const Login = () => {
   //  },[dispatch,res])
   return (
     <>
-      <div className="auth-page-wrapper auth-bg-cover py-5 d-flex justify-content-center align-items-center min-vh-100">
-        <div className="bg-overlay"></div>
+      <div
+        className="auth-page-wrapper auth-bg-cover  d-flex justify-content-center align-items-center "
+        style={{ height: "100vh" }}
+      >
+        {/* <div className="bg-overlay"></div> */}
         <div className="auth-page-content overflow-hidden pt-lg-5">
           <div className="container">
-            <div className="row">
-              <div className="col-lg-12">
+            <div className="row justify-content-center">
+              <div className="col-lg-6" style={{ width: "35%" }}>
                 <div className="card overflow-hidden">
                   <div className="row g-0">
-                    <div className="col-lg-6">
+                    {/* <!-- end col --> */}
+
+                    <div
+                      className="col-lg-12"
+                      style={{ backgroundColor: "white" }}
+                    >
+                      <div className="p-lg-5 p-4">
+                        <div style={{ textAlign: "center" }}>
+                          <div>
+                            <a
+                              // href="index.html"
+                              className="d-inline-block auth-logo text-muted"
+                            >
+                              <img
+                                src="assets/images/logowhite.png"
+                                alt=""
+                                style={{ height: "60px" }}
+                              />
+                            </a>
+                          </div>
+                          <h5 className="text-primary">Welcome Back !</h5>
+
+                          <p className="text-muted">Log in to your account.</p>
+                        </div>
+
+                        <div className="mt-4">
+                          <form
+                            onSubmit={handleSubmit(onSubmit)}
+                            // onSubmit={()=>{handleSubmit(onSubmit)}}
+                          >
+                            <div className="mb-3 form-icon">
+                              {/* <label htmlFor="username" className="form-label">
+                                Email
+                              </label> */}
+                              <input
+                                type="text"
+                                name="email"
+                                className="form-control form-control-icon"
+                                id="iconInput"
+                                placeholder="Email"
+                                {...register("email", {
+                                  required: true,
+                                  pattern: {
+                                    value:
+                                      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                                  },
+                                })}
+                              />
+                              <i className="ri-mail-unread-line" />
+                              {errors.email?.type === "required" && (
+                                <p role="alert" id="error">
+                                  Enter your valid Email Address
+                                </p>
+                              )}
+                            </div>
+
+                            <div className="mb-3 form-icon ">
+                              {/* <label
+                                className="form-label"
+                                htmlFor="password-input"
+                              >
+                                Password
+                              </label> */}
+                              <input
+                                name="password"
+                                type="password"
+                                className="form-control pe-5 password-input form-control-icon"
+                                placeholder="Password"
+                                id="password"
+                                {...register("password", { required: true })}
+                                aria-invalid={
+                                  errors.password ? "true" : "false"
+                                }
+                              />
+                            {/* <FontAwesomeIcon icon="fa-light fa-lock" /> */}
+                            <i className="ri-git-repository-private-line"></i>
+                              {errors.password?.type === "required" && (
+                                <p
+                                  role="alert"
+                                  id="error"
+                                  style={{ color: "red" }}
+                                >
+                                  Enter valid password
+                                </p>
+                              )}
+
+                              {/* <button
+                                  className="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted "
+                                  type="button"
+                                  id="password-addon"
+                                >
+                                  <i className="ri-eye-fill align-middle"></i>
+                                </button> */}
+                            </div>
+
+                            <div className="mt-4">
+                              <button
+                                className="btn btn-info w-100"
+                                // onClick={formSubmitHandler}
+                                type="submit"
+                              >
+                                Sign In
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+
+                        {/* <div className="mt-5 text-center">
+                          <p className="mb-0">
+                            Don't have an account ?{" "}
+                            <a
+                              href="auth-signup-cover.html"
+                              className="fw-semibold text-primary text-decoration-underline"
+                            >
+                              {" "}
+                              Signup
+                            </a>{" "}
+                          </p>
+                        </div> */}
+                      </div>
+                    </div>
+                    {/* <div className="col-lg-6">
                       <div className="p-lg-5 p-4 auth-one-bg h-100">
                         <div className="bg-overlay"></div>
                         <div className="position-relative h-100 d-flex flex-column">
@@ -137,115 +261,10 @@ const Login = () => {
                                 </div>
                               </div>
                             </div>
-                            {/* <!-- end carousel --> */}
                           </div>
                         </div>
                       </div>
-                    </div>
-                    {/* <!-- end col --> */}
-
-                    <div
-                      className="col-lg-6"
-                      style={{ backgroundColor: "white" }}
-                    >
-                      <div className="p-lg-5 p-4">
-                        <div>
-                          <h5 className="text-primary">Welcome Back !</h5>
-                          <p className="text-muted">Log in to your account.</p>
-                        </div>
-
-                        <div className="mt-4">
-                          <form
-                            onSubmit={handleSubmit(onSubmit)}
-                            // onSubmit={()=>{handleSubmit(onSubmit)}}
-                            action="https://themesbrand.com/velzon/html/interactive/index.html"
-                          >
-                            <div className="mb-3">
-                              <label htmlFor="username" className="form-label">
-                                Email
-                              </label>
-                              <input
-                                type="text"
-                                name="email"
-                                className="form-control"
-                                id="email"
-                                placeholder="Enter Email"
-                                {...register("email", {
-                                  required: true,
-                                  pattern: {
-                                    value:
-                                      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                                  },
-                                })}
-                              />
-                              {errors.email?.type === "required" && (
-                                <p role="alert" id="error">
-                                  Enter your valid Email Address
-                                </p>
-                              )}
-                            </div>
-
-                            <div className="mb-3">
-                              <label
-                                className="form-label"
-                                htmlFor="password-input"
-                              >
-                                Password
-                              </label>
-                              <div className="position-relative auth-pass-inputgroup mb-3">
-                                <input
-                                  name="password"
-                                  type="password"
-                                  className="form-control pe-5 password-input"
-                                  placeholder="Enter password"
-                                  id="password"
-                                  {...register("password", { required: true })}
-                                  aria-invalid={
-                                    errors.password ? "true" : "false"
-                                  }
-                                />
-                                {errors.password?.type === "required" && (
-                                  <p role="alert" id="error">
-                                    Enter valid password
-                                  </p>
-                                )}
-
-                                <button
-                                  className="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted "
-                                  type="button"
-                                  id="password-addon"
-                                >
-                                  <i className="ri-eye-fill align-middle"></i>
-                                </button>
-                              </div>
-                            </div>
-
-                            <div className="mt-4">
-                              <button
-                                className="btn btn-info w-100"
-                                // onClick={formSubmitHandler}
-                                type="submit"
-                              >
-                                Sign In
-                              </button>
-                            </div>
-                          </form>
-                        </div>
-
-                        {/* <div className="mt-5 text-center">
-                          <p className="mb-0">
-                            Don't have an account ?{" "}
-                            <a
-                              href="auth-signup-cover.html"
-                              className="fw-semibold text-primary text-decoration-underline"
-                            >
-                              {" "}
-                              Signup
-                            </a>{" "}
-                          </p>
-                        </div> */}
-                      </div>
-                    </div>
+                    </div> */}
                     {/* <!-- end col --> */}
                   </div>
                   {/* <!-- end row --> */}

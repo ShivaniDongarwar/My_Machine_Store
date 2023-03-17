@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 const NavBar = ({ toggle }) => {
   // const { userName } = useSelector((state) => state.vendorAuth);
-  const { logo, userName } = JSON.parse(localStorage.getItem("vendor"));
+  const { logo, company_name } = JSON.parse(localStorage.getItem("vendor"));
   const navigate = useNavigate();
   const clickHandler = async (e) => {
     e.stopPropagation();
@@ -1219,7 +1219,7 @@ const NavBar = ({ toggle }) => {
                     />
                     <span className="text-start ms-xl-2">
                       <span className="d-none d-xl-inline-block ms-1 fw-medium user-name-text">
-                        {userName}
+                        {company_name}
                       </span>
                       <span className="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">
                         Vendor

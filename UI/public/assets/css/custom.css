@@ -23,15 +23,59 @@ td.gridjs-td {
   border: 1px solid #e5e7eb;
   box-sizing: content-box;
   padding: 13px 15px !important;
-
 }
 .topbar-user {
   background-color: #fff !important;
 }
 
-.hstack{
+.hstack {
   float: right;
 }
-.btn {
+/* .btn {
   margin-left: 10px !important;
+} */
+.start-15 {
+  left: 15% !important;
+}
+.top-88 {
+  top: 88% !important;
+}
+
+th.gridjs-th .gridjs-th-content {
+  color: #000;
+}
+
+.teeh:nth-child(2) {
+  display: none;
+}
+.tdee:nth-child(2) {
+  display: none;
+}
+.teeh:nth-child(7) {
+  display: none;
+}
+.tdee:nth-child(7) {
+  display: none;
+}
+
+th.gridjs-th {
+  padding: 14px 3px;
+}
+.btn-success{
+  background-color: #000 !important;
+  border-color: #000 !important;
+}
+.left-53{
+  left: 53px;
+}
+.top-73{
+  top: 73px;
+}
+.auth-bg-cover{
+  background-image: url("../images/aerial-view-business-team.jpg") !important;
+  background-size: cover !important;
+  background-repeat: no-repeat;
+}
+.text-muted{
+  color: #424344 !important;
 }

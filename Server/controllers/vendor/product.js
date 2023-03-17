@@ -105,7 +105,7 @@ export const superAdminProductList = async (req, res) => {
     const page = parseInt(req?.query?.page || "0");
     const total = await addProduct.countDocuments({});
     const newUser2 = await addProduct
-      .find({},{ product_name:1,price:1,shortDiscription:1,image:1})
+      .find({},{ product_name:1,modalNum:1,image:1,brand:1,category:1})
       .limit(pageSize)
       .skip(pageSize * page);
     return res
@@ -129,5 +129,23 @@ export const productDetail=async(req,res)=>{
   } catch (error) {
     console.log("error----->", error.message);
     return res.status(500).json("someting went wrong......");
+  }
+}
+
+
+export const deleteProduct=async(req,res)=>{
+  console.log("delete====>",req.query.id);
+  const {id} = req.query;
+  try {
+
+    const newUser = await addProduct.findByIdAndDelete({
+      _id:id
+    });
+    console.log("newUser===>", newUser);
+    return res.status(200).json("Delete Successfully");
+  } catch (err) {
+     console.log("error----->",err.message)
+    return res.status(500).json("someting went wrong......");
+
   }
 }

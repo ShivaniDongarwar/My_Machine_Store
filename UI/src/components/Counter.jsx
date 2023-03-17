@@ -13,6 +13,7 @@ const Counter = () => {
       endValue: 560,
       percentage: 5000,
       para: "Total Machines",
+      icon:"bx bx-user-circle text-primary"
     },
     {
       id: 2,
@@ -20,6 +21,8 @@ const Counter = () => {
       endValue: 560,
       percentage: 500,
       para: "Vendors",
+      icon:"bx bx-user-circle text-primary"
+
     },
     {
       id: 3,
@@ -27,6 +30,8 @@ const Counter = () => {
       endValue: 560,
       percentage: 6000,
       para: "Total Enquires",
+      icon:"bx bx-user-circle text-primary"
+
     },
     {
       id: 4,
@@ -34,6 +39,8 @@ const Counter = () => {
       endValue: 560,
       percentage: 20,
       para: "Customers",
+      icon:"bx bx-user-circle text-primary"
+
     },
   ];
   return (
@@ -51,17 +58,17 @@ const Counter = () => {
                           {val.para}
                         </p>
                       </div>
-                      <div className="flex-shrink-0">
+                      {/* <div className="flex-shrink-0">
                         <h5 className="text-success fs-14 mb-0">
                           <i className="ri-arrow-right-up-line fs-13 align-middle" />
                           {val.percentage}
                         </h5>
-                      </div>
+                      </div> */}
                     </div>
                     <div className="d-flex align-items-end justify-content-between mt-4">
                       <div>
                         <h4 className="fs-22 fw-semibold ff-secondary mb-4">
-                          $
+
                           <CountUp
                             className="counter-value"
                             duration={4.75}
@@ -75,7 +82,7 @@ const Counter = () => {
                       </div>
                       <div className="avatar-sm flex-shrink-0">
                         <span className="avatar-title bg-soft-primary rounded fs-3">
-                          <i className="bx bx-dollar-circle text-primary" />
+                          <i className={val.icon} />
                         </span>
                       </div>
                     </div>

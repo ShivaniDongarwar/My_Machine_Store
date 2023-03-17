@@ -13,8 +13,9 @@ function AddProduct() {
         title="Product List"
         URL={`/enquiry/productList`}
         _id={_id}
-        AddProductlink="/AddProduct"
+        AddVendorLink="/AddProduct"
         ProductDetailLink="/ProductDetail"
+        addProduct="Add Product"
         searchItem={"product_name"}
       />
     </div>

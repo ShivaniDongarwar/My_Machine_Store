@@ -22,7 +22,7 @@ const ProductEnquiryList = () => {
 
   return (
     <div className="page-content">
-      <SideBar title="User Enquiry" URL="/enquiry/getUserEnquiry" />
+      <SideBar title="User Enquiry" URL="/enquiry/getUserEnquiry" tag_2="Delete"/>
     </div>
   );
 };

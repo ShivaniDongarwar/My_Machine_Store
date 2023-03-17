@@ -289,7 +289,7 @@
 }
 @media (min-width:768px) {
     #page-topbar {
-    left: 250px;
+    /* left: 250px; */
 }
 }.navbar-header {
     display: -webkit-box;
@@ -325,7 +325,7 @@
     width: 36px;
 }
 }.navbar-header .user-name-text {
-    color: var(--vz-gray-700);
+    /* color: white; */
 }
 .app-search {
     padding: calc(32px / 2) 0;
@@ -4499,6 +4499,7 @@ b, strong {
 a, button {
     outline: 0!important;
     position: relative;
+    color: #000;
 }
 .btn {
     -webkit-box-shadow: none;
@@ -6999,6 +7000,7 @@ to {
 .form-icon .form-control-icon {
     padding-left: 2.7rem;
     position: relative;
+    font-size: 15px;
 }
 .form-icon i {
     position: absolute;
@@ -13607,6 +13609,7 @@ to {
     padding: 10px 0;
     -webkit-transition: all .5s ease;
     transition: all .5s ease;
+    background-color:#000;
 }
 @media (max-width:991.98px) {
     .navbar-landing {
